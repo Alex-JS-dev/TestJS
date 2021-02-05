@@ -1,23 +1,22 @@
-name: Node.js NPM install
+name: Github Actions Example
 
 on:
-  push:
-    branches: [ $default-branch ]
   pull_request:
+  push:
     branches: [ $default-branch ]
 
 jobs:
-  build:
-
+  test:
+    name: Running Units Tests
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    - run: npm i data-store
+    - name: Install
+      run: npm install
+    - name: Test
+      run: npm test
